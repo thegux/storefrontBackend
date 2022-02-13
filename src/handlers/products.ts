@@ -1,8 +1,26 @@
-import {Response, Request} from 'express';
+import express, {Response, Request} from 'express';
 import ProductTable, {Product} from '../models/products';
 import jwt from "jsonwebtoken";
 
 const store = new ProductTable();
+
+const productRoutes = (app: express.Application) => {
+    app.get('/products', index);
+    app.get('/products/{:id}', show);
+    app.post('/products', create);
+
+}
+
+const index = async(_req: Request, res: Response) => {
+    const products = await store.index();
+    res.json(products);
+}
+
+const show = async(req: Request, res: Response) => {
+    const product = await store.show(req.body.id);
+    res.json(product)
+}
+
 
 const create = async(req: Request, res: Response) => {
 
@@ -31,3 +49,6 @@ const create = async(req: Request, res: Response) => {
         res.json({error});
     }
 }
+
+
+export default productRoutes;
