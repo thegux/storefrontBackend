@@ -6,6 +6,13 @@ export type Order = {
     user_id: number
 }
 
+export type OrderProduct = {
+    id?: number,
+    order_id: number,
+    product_id: number,
+    quantity: number
+}
+
 export default class OrderTable {
     async show(orderId: number):Promise<Order> {
         try {
