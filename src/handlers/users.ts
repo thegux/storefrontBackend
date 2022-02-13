@@ -4,7 +4,26 @@ import jwt from "jsonwebtoken"
 
 const store = new UserTable();
 
-export const create = async(req: Request, res: Response) => {
+const userRoutes = (app: express.Application) => {
+    app.get('/users', index);
+    app.get('/users/{:id}', show);
+    app.post('/users', create);
+    app.post('/users/authenticate', authenticate);
+
+}
+
+const index = async(_req: Request, res: Response) => {
+    const users = await store.index();
+    res.json(users);
+}
+
+const show = async(req: Request, res: Response) => {
+    const user = await store.show(req.body.id);
+    res.json(user)
+}
+
+
+const create = async(req: Request, res: Response) => {
     const user : User = {
         username: req.body.username,
         password: req.body.password,
@@ -26,7 +45,7 @@ export const create = async(req: Request, res: Response) => {
 }
 
 
-export const authenticate = async(req: Request, res: Response) => {
+const authenticate = async(req: Request, res: Response) => {
     const user : User = {
         username: req.body.username,
         password: req.body.password
@@ -45,3 +64,5 @@ export const authenticate = async(req: Request, res: Response) => {
     }
 }
 
+
+export default userRoutes;
