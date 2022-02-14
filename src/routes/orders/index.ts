@@ -9,5 +9,4 @@ orders.get('/{:id}', show);
 // (POST / CREATE) - CREATE AN ORDER
 orders.post('/create', addProduct);
 
-
 export default orders;
