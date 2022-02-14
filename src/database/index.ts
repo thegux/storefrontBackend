@@ -7,15 +7,21 @@ const {
     POSTGRES_HOST,
     POSTGRES_DB,
     POSTGRES_USER,
-    POSTGRES_PASSWORD
+    POSTGRES_PASSWORD,
+    POSTGRES_TEST_DB,
+    POSTGRES_TEST_PASSWORD,
+    ENV,
 } = process.env;
 
 
-const database = new Pool({
+const poolOptions = {
     host: POSTGRES_HOST,
-    database: POSTGRES_DB,
+    database: ENV === "dev" ? POSTGRES_DB : POSTGRES_TEST_DB,
     user: POSTGRES_USER,
-    password: POSTGRES_PASSWORD
-});
+    password: ENV === "dev" ? POSTGRES_PASSWORD : POSTGRES_TEST_PASSWORD,
+}
+
+
+const database = new Pool(poolOptions);
 
 export default database;
