@@ -1,26 +1,17 @@
 import express from 'express';
+import { create, index, show } from '../../handlers/products';
 
 const products = express.Router();
 
-products.get('/', (req: express.Request, res: express.Response) => {
-    res.send("Welcome to product's routes");
-})
-
 
 // (READ / INDEX) - GET ALL
-products.get('/index', (req: express.Request, res: express.Response) => {
-    res.send("This route should read all products");
-});
+products.get('/', index);
 
 // (READ / SHOW) - GET SINGLE PRODUCT
-products.get('/show', (req: express.Request, res: express.Response) => {
-    res.send("This route should read a single product");
-});
+products.get('/{:id}', show);
 
 // (POST / CREATE) - CREATE A PRODUCT
-products.post('/create', (req: express.Request, res: express.Response) => {
-    res.send("This route should create a product");
-});
+products.post('/create', create);
 
 
 

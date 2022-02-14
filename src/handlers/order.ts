@@ -1,21 +1,15 @@
-import express, { Request, Response } from 'express'
+import { Request, Response } from 'express'
 import OrderTable, { Order, OrderProduct } from '../models/orders'
 import jwt from "jsonwebtoken"
 
 const store = new OrderTable();
 
-const orderRoutes = (app: express.Application) => {
-    app.get('/orders/{:id}', show);
-    app.post('/orders', create);
-    app.post('/orders/add', addProduct);
-}
-
-const show = async(req: Request, res: Response) => {
+export const show = async(req: Request, res: Response) => {
     const order = await store.show(req.body.id);
     res.json(order);
 }
 
-const create = async(req: Request, res: Response) => {
+export const create = async(req: Request, res: Response) => {
 
     const jwtSecret = process.env.BCRYPT_PASSWORD || "";
 
@@ -44,7 +38,7 @@ const create = async(req: Request, res: Response) => {
 
 }
 
-const addProduct = async(req: Request, res: Response) => { 
+export const addProduct = async(req: Request, res: Response) => { 
     const jwtSecret = process.env.BCRYPT_PASSWORD || "";
 
     try {
@@ -74,4 +68,3 @@ const addProduct = async(req: Request, res: Response) => {
 }
 
 
-export default orderRoutes;

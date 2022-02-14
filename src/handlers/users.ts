@@ -4,34 +4,62 @@ import jwt from "jsonwebtoken"
 
 const store = new UserTable();
 
-const userRoutes = (app: express.Application) => {
-    app.get('/users', index);
-    app.get('/users/{:id}', show);
-    app.post('/users', create);
-    app.post('/users/authenticate', authenticate);
+export const index = async(req: Request, res: Response) => {
 
-}
+    const jwtSecret = process.env.BCRYPT_PASSWORD || "";
 
-const index = async(_req: Request, res: Response) => {
+    try {
+        const authorizationHeader = req.headers.authorization;
+        const token = authorizationHeader?.split(' ')[1] || "";
+        jwt.verify(token, jwtSecret);
+    } catch (error) {
+        res.status(401);
+        res.json({error});
+        return
+    }
+
     const users = await store.index();
     res.json(users);
 }
 
-const show = async(req: Request, res: Response) => {
+export const show = async(req: Request, res: Response) => {
+    const jwtSecret = process.env.BCRYPT_PASSWORD || "";
+
+    try {
+        const authorizationHeader = req.headers.authorization;
+        const token = authorizationHeader?.split(' ')[1] || "";
+        jwt.verify(token, jwtSecret);
+    } catch (error) {
+        res.status(401);
+        res.json({error});
+        return
+    }
+
     const user = await store.show(req.body.id);
     res.json(user)
 }
 
 
-const create = async(req: Request, res: Response) => {
+export const create = async(req: Request, res: Response) => {
+
+    const jwtSecret = process.env.BCRYPT_PASSWORD || "";
+
+    try {
+        const authorizationHeader = req.headers.authorization;
+        const token = authorizationHeader?.split(' ')[1] || "";
+        jwt.verify(token, jwtSecret);
+    } catch (error) {
+        res.status(401);
+        res.json({error});
+        return
+    }
+    
     const user : User = {
         username: req.body.username,
         password: req.body.password,
         first_name: req.body.firstName || "",
         last_name: req.body.lastName || ""
     }
-    
-    const jwtSecret = process.env.BCRYPT_PASSWORD || "";
 
     try {
         const newUser = await store.create(user);
@@ -45,7 +73,7 @@ const create = async(req: Request, res: Response) => {
 }
 
 
-const authenticate = async(req: Request, res: Response) => {
+export const authenticate = async(req: Request, res: Response) => {
     const user : User = {
         username: req.body.username,
         password: req.body.password
@@ -64,5 +92,3 @@ const authenticate = async(req: Request, res: Response) => {
     }
 }
 
-
-export default userRoutes;
