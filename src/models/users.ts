@@ -29,7 +29,7 @@ export default class UserTable {
 	}
 
 	//show - get single user method
-	async show(id: string): Promise<User> {
+	async show(id: number): Promise<User> {
 		try {
 			const databaseConnection = await Client.connect();
 			const sql = 'SELECT * FROM users WHERE id=($1)';
@@ -45,14 +45,15 @@ export default class UserTable {
 	//create - add single users
 	async create(newUser: User): Promise<User> {
 		try {
+			
 			const hash = bcrypt.hashSync(
 				newUser.password + pepper,
 				parseInt(saltRounds)
 			);
-
+			
 			const databaseConnection = await Client.connect();
 			const sql =
-				'INSERT INTO users (first_name, last_name, password, username) VALUES($1,$2,$3) RETURNING *';
+				'INSERT INTO users (first_name, last_name, password, username) VALUES($1,$2,$3,$4) RETURNING *';
 			const result = await databaseConnection.query(sql, [
 				newUser.first_name,
 				newUser.last_name,
@@ -63,6 +64,7 @@ export default class UserTable {
 
 			return result.rows[0];
 		} catch (e) {
+			console.log(e)
 			throw new Error(
 				`Could not add new user ${newUser.first_name}. Error ${e}`
 			);

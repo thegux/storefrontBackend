@@ -7,7 +7,7 @@ const users = express.Router();
 users.get('/', index);
 
 // (READ / SHOW) - GET SINGLE USER
-users.get('/show', show);
+users.get('/:id', show);
 
 // (POST / CREATE) - CREATE A USER
 users.post('/create', create);
