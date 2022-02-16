@@ -67,9 +67,9 @@ export const authenticate = async (req: Request, res: Response) => {
 	const jwtSecret = process.env.BCRYPT_PASSWORD || '';
 
 	try {
-		const authenticated_user = store.authenticate(user.username, user.password);
-		const token = jwt.sign({ user: authenticated_user }, jwtSecret);
-		res.json(token);
+		const authenticated_user = await store.authenticate(user.username, user.password);
+		const token = jwt.sign({ user: authenticated_user?.password }, jwtSecret);
+		res.json({token, id: authenticated_user?.id});
 	} catch (error) {
 		res.status(400);
 		res.json({ error });

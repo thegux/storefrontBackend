@@ -74,7 +74,7 @@ export default class UserTable {
 	// authenticate
 	async authenticate(username: string, password: string): Promise<User | null> {
 		const databaseConnection = await Client.connect();
-		const sql = 'SELECT password FROM users WHERE username=($1)';
+		const sql = 'SELECT password,id FROM users WHERE username=($1)';
 
 		const result = await databaseConnection.query(sql, [username]);
 

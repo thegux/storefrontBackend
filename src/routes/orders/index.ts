@@ -1,5 +1,5 @@
 import express from 'express';
-import { addProduct, show } from '../../handlers/order';
+import { addProduct, create, show } from '../../handlers/order';
 
 const orders = express.Router();
 
@@ -7,6 +7,9 @@ const orders = express.Router();
 orders.get('/{:id}', show);
 
 // (POST / CREATE) - CREATE AN ORDER
-orders.post('/create', addProduct);
+orders.post('/create', create);
+
+// (POST / CREATE) - CREATE AN ORDER
+orders.post('/add', addProduct);
 
 export default orders;

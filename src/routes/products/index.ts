@@ -7,7 +7,7 @@ const products = express.Router();
 products.get('/', index);
 
 // (READ / SHOW) - GET SINGLE PRODUCT
-products.get('/{:id}', show);
+products.get('/:id', show);
 
 // (POST / CREATE) - CREATE A PRODUCT
 products.post('/create', create);
