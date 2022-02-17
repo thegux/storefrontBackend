@@ -1,4 +1,5 @@
 import Client from '../database/index';
+import { validateOrderStatus } from '../helpers/validators';
 
 export type Order = {
 	id?: number;
@@ -32,6 +33,7 @@ export default class OrderTable {
 
 	async create(status: string, userId: number): Promise<Order> {
 		try {
+			validateOrderStatus(status);
 			const databaseConnection = await Client.connect();
 			const sql =
 				'INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *';

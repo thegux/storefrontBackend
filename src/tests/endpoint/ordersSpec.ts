@@ -31,7 +31,7 @@ describe('Order endpoint test', () => {
 			.send(product_payload);
 
 		const payload = {
-			status: 'open',
+			status: 'active',
 			userId: userId,
 		};
 
@@ -54,14 +54,14 @@ describe('Order endpoint test', () => {
 
 	it('should create an order', async () => {
 		const payload = {
-			status: 'open',
+			status: 'active',
 			userId: userId,
 		};
 		const response = await request
 			.post('/orders/create')
 			.set('authorization', `Bearer ${authorization}`)
 			.send(payload);
-		expect(response.body.status).toBe('open');
+		expect(response.body.status).toBe('active');
 		expect(response.body.user_id).toEqual(userId.toString());
 		expect(response.body.id).toBeDefined();
 	});

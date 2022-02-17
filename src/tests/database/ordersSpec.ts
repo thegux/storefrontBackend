@@ -28,15 +28,15 @@ describe('order database tests', () => {
 		referenceProductOrder = await productStore.create(orderProduct);
 
 		const userId = refernceUserOrder.id || 0;
-		referenceOrder = await store.create('open', userId);
+		referenceOrder = await store.create('active', userId);
 	});
 
 	it('should create an order', async () => {
 		const userId = refernceUserOrder.id || 0;
-		const response = await store.create('in progress', userId);
+		const response = await store.create('complete', userId);
 
 		expect(response.id).toBeDefined();
-		expect(response.status).toBe('in progress');
+		expect(response.status).toBe('complete');
 	});
 
 	it('should get an order', async () => {
