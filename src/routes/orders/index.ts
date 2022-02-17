@@ -4,7 +4,7 @@ import { addProduct, create, show } from '../../handlers/order';
 const orders = express.Router();
 
 // (READ / SHOW) - GET SINGLE ORDER
-orders.get('/{:id}', show);
+orders.get('/:id', show);
 
 // (POST / CREATE) - CREATE AN ORDER
 orders.post('/create', create);

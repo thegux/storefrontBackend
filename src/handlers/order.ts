@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 const store = new OrderTable();
 
 export const show = async (req: Request, res: Response) => {
-	const order = await store.show(req.body.id);
+	const order = await store.show(parseInt(req.params.id));
 	res.json(order);
 };
 

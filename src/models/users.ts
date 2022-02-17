@@ -45,12 +45,11 @@ export default class UserTable {
 	//create - add single users
 	async create(newUser: User): Promise<User> {
 		try {
-			
 			const hash = bcrypt.hashSync(
 				newUser.password + pepper,
 				parseInt(saltRounds)
 			);
-			
+
 			const databaseConnection = await Client.connect();
 			const sql =
 				'INSERT INTO users (first_name, last_name, password, username) VALUES($1,$2,$3,$4) RETURNING *';
@@ -64,7 +63,7 @@ export default class UserTable {
 
 			return result.rows[0];
 		} catch (e) {
-			console.log(e)
+			console.log(e);
 			throw new Error(
 				`Could not add new user ${newUser.first_name}. Error ${e}`
 			);

@@ -9,7 +9,8 @@
     "test": "set ENV=test && db-migrate db:create storefront_test && db-migrate --env test up && npm run jasmine && db-migrate db:drop storefront_test",
     "jasmine": "jasmine-ts",
     "prettier": "prettier --config .prettierrc \"src/**/*.ts\" --write",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "lint": "eslint . --ext .ts"
   },
   "author": "Udacity",
   "license": "ISC",

@@ -35,12 +35,17 @@ export const show = async (req: Request, res: Response) => {
 	}
 
 	const user = await store.show(parseInt(req.params.id));
-	res.json({username: user.username, id: user.id, firstName: user.first_name, lastName: user.last_name});
+	res.json({
+		username: user.username,
+		id: user.id,
+		firstName: user.first_name,
+		lastName: user.last_name,
+	});
 };
 
 export const create = async (req: Request, res: Response) => {
 	const jwtSecret = process.env.BCRYPT_PASSWORD || '';
-	
+
 	const user: User = {
 		username: req.body.username,
 		password: req.body.password,
@@ -51,7 +56,13 @@ export const create = async (req: Request, res: Response) => {
 	try {
 		const newUser = await store.create(user);
 		const token = jwt.sign({ user: newUser }, jwtSecret);
-		res.json({username: newUser.username, id: newUser.id, firstName: newUser.first_name, lastName: newUser.last_name, token});
+		res.json({
+			username: newUser.username,
+			id: newUser.id,
+			firstName: newUser.first_name,
+			lastName: newUser.last_name,
+			token,
+		});
 	} catch (error) {
 		res.status(400);
 		res.json({ error, user });
@@ -67,9 +78,12 @@ export const authenticate = async (req: Request, res: Response) => {
 	const jwtSecret = process.env.BCRYPT_PASSWORD || '';
 
 	try {
-		const authenticated_user = await store.authenticate(user.username, user.password);
+		const authenticated_user = await store.authenticate(
+			user.username,
+			user.password
+		);
 		const token = jwt.sign({ user: authenticated_user?.password }, jwtSecret);
-		res.json({token, id: authenticated_user?.id});
+		res.json({ token, id: authenticated_user?.id });
 	} catch (error) {
 		res.status(400);
 		res.json({ error });

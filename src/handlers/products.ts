@@ -1,4 +1,4 @@
-import express, { Response, Request } from 'express';
+import { Response, Request } from 'express';
 import ProductTable, { Product } from '../models/products';
 import jwt from 'jsonwebtoken';
 
