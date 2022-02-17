@@ -23,7 +23,7 @@ export default class ProductTable {
 	}
 
 	//show - get single product method
-	async show(id: string): Promise<Product> {
+	async show(id: number): Promise<Product> {
 		try {
 			const databaseConnection = await Client.connect();
 			const sql = 'SELECT * FROM products WHERE id=($1)';
