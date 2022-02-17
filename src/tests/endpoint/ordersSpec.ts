@@ -84,8 +84,8 @@ describe('Order endpoint test', () => {
 	});
 
 	it('should get an order', async () => {
-		const response = await request.get(`/orders/${1}`);
-		expect(response.body.id).toBe(1);
+		const response = await request.get(`/orders/${userId}`);
+		expect(response.body.id).toBeDefined();
 		expect(response.body.products).toBeDefined();
 		expect(response.body.status).toBeDefined();
 		expect(response.body.user_id).toBeDefined();

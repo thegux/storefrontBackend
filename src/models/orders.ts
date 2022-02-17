@@ -15,19 +15,24 @@ export type OrderProduct = {
 };
 
 export default class OrderTable {
-	async show(orderId: number): Promise<Order> {
+	async show(userId: number): Promise<Order> {
 		try {
 			const databaseConnection = await Client.connect();
-			const sql = 'SELECT * from orders where id=($1)';
-			const result = await databaseConnection.query(sql, [orderId]);
+			const sql = 'SELECT * from orders where user_id=($1)';
+			const result = await databaseConnection.query(sql, [userId]);
+			const latestOrder = result.rows[result.rows.length - 1];
+
 			//get products from order
 			const sql_products =
 				'SELECT product_id, quantity, price, name FROM products INNER JOIN order_products ON order_products.order_id=($1) AND products.id = order_products.product_id';
-			const products = await databaseConnection.query(sql_products, [orderId]);
+			const products = await databaseConnection.query(sql_products, [
+				latestOrder.id,
+			]);
 			databaseConnection.release();
-			return { ...result.rows[0], products: products.rows };
+			return { ...latestOrder, products: products.rows };
 		} catch (error) {
-			throw new Error(`Could not get order with id: ${orderId}, ${error}`);
+			console.log(`PEDIDO REQUISITADO`, userId);
+			throw new Error(`Could not get order with id: ${userId}, ${error}`);
 		}
 	}
 
