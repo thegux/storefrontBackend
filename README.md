@@ -18,7 +18,11 @@ npm install
 npm start
 ```
 
-## Endpoint
+## Authentication
+This application uses JWT tokens with salts to authenticate users.
+
+
+## Endpoints
 There are ten endpoints in this application:
 
 ### 1. USER ENDPOINTS
@@ -61,6 +65,21 @@ POST/USERS/CREATE
 ##### Response Type: An User object containg a TOKEN
 
 
+#### 1.4 POST/PRODUCTS/AUTHENTICATE 
+Authenticates an user.
+#### Body:
+
+- Product = {
+		username: 'USERNAME',
+		password: 'USER_PASSWORD',
+	    }
+    
+```
+POST/users/authenticate
+```
+##### Response Type: A object containing a TOKEN and the user's id
+
+
 
 ### 2. PRODUCT ENDPOINTS
 
@@ -99,6 +118,46 @@ POST/PRODUCTS/CREATE
 ##### Response Type: An User object containg a TOKEN
 
 
+
+### 3. ORDERS ENDPOINTS [TOKEN REQUIRED]
+
+#### 3.1 GET/:USERID
+Gets most recent order from the user in the database
+
+##### Params:    
+```
+GET/orders/:userId
+```
+
+##### Response Type: An order object
+
+#### 3.2 POST/ORDERS/CREATE [TOKEN REQUIRED]
+Creates an order in the database
+
+##### Params:
+- Order = {
+	      status: ORDER_STATUS ("active" or "complete"),
+	      userId: USER_ID
+	  }
+```
+GET/orders/create
+```
+
+
+#### 3.3 POST/ORDERS/ADD [TOKEN REQUIRED]
+Adds a product to an order.
+#### Body:
+
+- Product = {
+	     quantity: PRODUCT_AMOUNT,
+	     orderId: ORDER_ID,
+	     productId: PRODUCT_ID
+	  }
+    
+```
+POST/PRODUCTS/CREATE
+```
+##### Response Type: An order containing the quantity, the order's id and the product's id that was sent.
 
 
 ## Testing
