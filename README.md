@@ -3,6 +3,10 @@ This is an API backend for a storefront application. This project was executed a
 
 ## Getting Started
 
+### Ports
+The server runs in localhost:3000
+The database runs in 127.0.0.1
+
 ### Pre-requisites
 In order to run this project properly, make sure you have the following installed:
 - Node
@@ -13,7 +17,17 @@ In order to run this project properly, make sure you have the following installe
 ```
 npm install
 ```
-3. Start your project:
+3. Create a database
+```
+db-migrate db:create storefront
+```
+
+4. Run database migrations
+```
+db-migrate up
+```
+
+5. Start your project:
 ```
 npm start
 ```
