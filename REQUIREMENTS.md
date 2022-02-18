@@ -135,3 +135,29 @@ POST/PRODUCTS/CREATE
 ##### Response Type: An order containing the quantity, the order's id and the product's id that was sent.
 
 
+
+# DATABASE SCHEMA
+
+## Data Shapes
+#### Product
+    id SERIAL PRIMARY  KEY,
+    name VARCHAR(150) NOT NULL,
+    price numeric NOT NULL
+
+#### User
+    id SERIAL PRIMARY  KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    password VARCHAR(255),
+    username VARCHAR(50) NOT NULL UNIQUE
+    
+#### Orders
+    id SERIAL PRIMARY  KEY,
+    status VARCHAR(64),
+    user_id bigint REFERENCES users(id)
+    
+#### Order Products
+    id SERIAL PRIMARY  KEY,
+    quantity integer,
+    order_id bigint REFERENCES orders(id),
+    product_id bigint REFERENCES products(id)
