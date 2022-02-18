@@ -21,10 +21,10 @@ npm start
 ## Endpoint
 There are ten endpoints in this application:
 
-### USER ENDPOINTS
+### 1. USER ENDPOINTS
 
-#### 1. GET/USERS [TOKEN REQUIRED]
-Get all the users in the database
+#### 1.1 GET/USERS [TOKEN REQUIRED]
+Gets all the users in the database
 
 ##### Params:    
 ```
@@ -33,8 +33,8 @@ GET/users
 
 ##### Response Type: Array of Users  
 
-#### 2. GET/USERS/:ID [TOKEN REQUIRED]
-Get a single user from the database
+#### 1.2 GET/USERS/:ID [TOKEN REQUIRED]
+Gets a single user from the database
 #### Params:
 
 - ID - The id of the requested user
@@ -43,6 +43,62 @@ Get a single user from the database
 GET/USERS/:ID
 ```
 ##### Response Type: An User object
+
+#### 1.3 POST/USERS/CREATE 
+Creates an user.
+#### Body:
+
+- User = {
+			username: 'YOUR_USERNAME',
+			password: 'YOUR_PASSWORD',
+			firstName: 'YOUR_NAME',
+			lastName: 'YOUR_LASTNAME',
+		}
+    
+```
+POST/USERS/CREATE
+```
+##### Response Type: An User object containg a TOKEN
+
+
+
+### 2. PRODUCT ENDPOINTS
+
+#### 2.1 GET/PRODUCTS
+Gets all the products in the database
+
+##### Params:    
+```
+GET/products
+```
+
+##### Response Type: Array of Products
+
+#### 2.2 GET/PRODUCTS/:ID
+Gets a single product from the database
+
+##### Params:    
+```
+GET/products/id
+```
+
+##### Response Type: A single product
+
+#### 2.3 POST/PRODUCTS/CREATE [TOKEN REQUIRED]
+Creates a product.
+#### Body:
+
+- Product = {
+			name: 'PRODUCT_NAME',
+			price: PRODUCT_PRICE,
+		}
+    
+```
+POST/PRODUCTS/CREATE
+```
+##### Response Type: An User object containg a TOKEN
+
+
 
 
 ## Testing
